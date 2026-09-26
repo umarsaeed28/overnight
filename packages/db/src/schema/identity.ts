@@ -6,6 +6,9 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   name: text("name"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  // Written by Auth.js; see schema/auth.ts.
+  emailVerified: timestamp("email_verified", { withTimezone: true }),
+  image: text("image"),
 });
 
 export const workspaces = pgTable("workspaces", {

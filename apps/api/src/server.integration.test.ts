@@ -1,7 +1,7 @@
 import { applyTestEnv } from "@oqa/core/testing";
 import { schema } from "@oqa/db";
 import { createTestDatabase, type TestDatabase } from "@oqa/db/testing";
-import type { FastifyInstance } from "fastify";
+import type { FastifyInstance, LightMyRequestResponse } from "fastify";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import type { SessionUser } from "./plugins/auth.js";
 import { API_PREFIX, buildServer } from "./server.js";
@@ -22,12 +22,17 @@ const users = {
 let alphaWorkspace = "";
 let betaWorkspace = "";
 
-const get = (url: string) => app.inject({ method: "GET", url: `${API_PREFIX}${url}` });
-const post = (url: string, payload?: unknown) =>
-  app.inject({ method: "POST", url: `${API_PREFIX}${url}`, payload });
-const patch = (url: string, payload?: unknown) =>
-  app.inject({ method: "PATCH", url: `${API_PREFIX}${url}`, payload });
-const del = (url: string) => app.inject({ method: "DELETE", url: `${API_PREFIX}${url}` });
+const send = (
+  method: "GET" | "POST" | "PATCH" | "DELETE",
+  url: string,
+  payload?: object,
+): Promise<LightMyRequestResponse> =>
+  app.inject({ method, url: `${API_PREFIX}${url}`, ...(payload ? { payload } : {}) });
+
+const get = (url: string) => send("GET", url);
+const post = (url: string, payload?: object) => send("POST", url, payload);
+const patch = (url: string, payload?: object) => send("PATCH", url, payload);
+const del = (url: string) => send("DELETE", url);
 
 beforeAll(async () => {
   db = await createTestDatabase("api");

@@ -1,3 +1,4 @@
+export * from "./auth.js";
 export * from "./identity.js";
 export * from "./ingest.js";
 export * from "./knowledge.js";

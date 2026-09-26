@@ -40,6 +40,28 @@ Spec-silent choices, recorded per section 0 of the build spec.
   testcontainers.** Reason: the spec names testcontainers, but a container runtime is
   not always present on a dev machine; pointing at a local Postgres 16 with pgvector
   keeps the tests runnable either way. CI uses the container path.
+- **Workspace creation and user upsert are the only operations on the owner pool.**
+  They cannot run under RLS: the membership row that would grant access does not
+  exist yet, so no `app.workspace_id` can satisfy the policy. Both live in
+  `apps/api/src/services/workspaces.ts` so the exception is auditable in one file.
+- **Auth.js sessions are JWTs, and the API decrypts the cookie itself.** Reason:
+  spec section 21 authenticates by session cookie, and a database-backed session
+  would make every API request wait on a lookup in the web app. The cookie name
+  doubles as the JWE salt, so the API tries both the `__Secure-` and plain names.
+- **Auth.js needs three tables the spec does not model** (`auth_accounts`,
+  `auth_verification_tokens`, and `users.email_verified` / `users.image`). Magic-link
+  sign-in cannot work without a verification token store. They hold credentials, not
+  tenant data, so `oqa_app` is denied access instead of being given a policy.
+- **Member management endpoints** (`GET/PATCH/DELETE /workspaces/:ws/members`) were
+  added; section 21 omits them although section 20.1 specifies a members settings
+  page. Removing the last owner is refused, since that would leave the workspace
+  unmanageable.
+- **shadcn/ui primitives are hand-written in `components/ui`** rather than pulled in
+  by the CLI. Reason: shadcn is a copy-in component collection, not a dependency, and
+  only Button, Input and Skeleton are needed so far. More get added as views need them.
+- **Next's webpack gets `resolve.extensionAlias` for `.js` → `.ts`.** The workspace
+  packages use NodeNext-style `./x.js` specifiers that resolve to `./x.ts`; tsc, tsx
+  and Vitest understand this, webpack does not.
 - **Initial migration is hand-written SQL, not drizzle-kit generated.** Reason: the
   schema needs a generated `tsvector` column, a partial HNSW index, RLS policies, and
   role grants, none of which the Drizzle schema DSL can express. The Drizzle schema

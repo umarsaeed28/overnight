@@ -19,6 +19,29 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"  # E
 node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"  # AUTH_SECRET
 ```
 
+## Sign in locally
+
+Sign-in needs either SMTP (magic link) or Entra ID. With neither configured, `/login`
+says so rather than showing a form that cannot work. For a local session without SMTP,
+mint the Auth.js cookie directly:
+
+```bash
+node -e "
+import('@auth/core/jwt').then(async ({ encode }) => {
+  console.log(await encode({
+    token: { sub: process.env.USER_ID, email: process.env.USER_EMAIL },
+    secret: process.env.AUTH_SECRET,
+    salt: 'authjs.session-token',
+    maxAge: 3600,
+  }));
+});
+"
+# then: curl -H "Cookie: authjs.session-token=<token>" http://localhost:3000/
+```
+
+Run it from `apps/web` so `@auth/core` resolves, with `USER_ID` and `USER_EMAIL` taken
+from the seeded `demo@overnight.local` row.
+
 ## Run integration tests
 
 Integration tests need a Postgres 16 with pgvector and pg_trgm. Either let

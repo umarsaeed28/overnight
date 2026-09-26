@@ -1,0 +1,41 @@
+{
+  "name": "@oqa/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@auth/core": "^0.41.3",
+    "@auth/drizzle-adapter": "^1.7.4",
+    "@oqa/core": "workspace:*",
+    "@oqa/db": "workspace:*",
+    "@tanstack/react-query": "^5.62.7",
+    "clsx": "^2.1.1",
+    "drizzle-orm": "^0.38.2",
+    "lucide-react": "^0.468.0",
+    "next": "^15.1.2",
+    "next-auth": "^5.0.0-beta.25",
+    "nodemailer": "^7.0.13",
+    "react": "^19.0.0",
+    "react-arborist": "^3.4.0",
+    "react-dom": "^19.0.0",
+    "react-resizable-panels": "^2.1.7",
+    "tailwind-merge": "^2.5.5",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.10.2",
+    "@types/nodemailer": "^6.4.17",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
