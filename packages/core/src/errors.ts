@@ -70,5 +70,7 @@ export const unauthorized = (message = "Sign in to continue.") =>
  */
 export const notFound = (message = "Not found.") => new HttpError("not_found", message);
 export const forbidden = (message: string) => new HttpError("forbidden", message);
+export const conflict = (message: string, details?: unknown) =>
+  new HttpError("conflict", message, details);
 export const rateLimited = (message = "Too many requests. Try again shortly.") =>
   new HttpError("rate_limited", message);
