@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-124",
+  "summary": "Payment provider timeouts are reported as declines",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "payments",
+    "reliability"
+  ],
+  "epic": "Payments",
+  "reporter": "alex.k",
+  "assignee": null,
+  "created": "2025-03-19T09:30:00.000Z",
+  "updated": "2025-03-24T14:15:00.000Z",
+  "description": "We only learn the outcome of a charge from the response to our own request. When the provider times out but the charge lands, the shopper is told payment failed and often pays again.",
+  "acceptance_criteria": [
+    "A timed-out charge is reconciled rather than assumed failed.",
+    "A shopper is never charged twice for one order."
+  ],
+  "links": []
+}

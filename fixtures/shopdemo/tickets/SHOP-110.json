@@ -1,0 +1,21 @@
+{
+  "key": "SHOP-110",
+  "summary": "Cart allows 99 of one item though the docs say 10",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Low",
+  "labels": [
+    "cart"
+  ],
+  "epic": "Cart",
+  "reporter": "alex.k",
+  "assignee": null,
+  "created": "2025-02-05T09:30:00.000Z",
+  "updated": "2025-02-10T14:15:00.000Z",
+  "description": "Cart rules state a maximum of 10 units per line. The API clamps at 99. Warehouse cannot pick 99 of most SKUs and asked for the documented limit to be enforced.",
+  "acceptance_criteria": [
+    "A line cannot exceed 10 units.",
+    "Asking for more shows a message rather than silently clamping."
+  ],
+  "links": []
+}

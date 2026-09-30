@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-129",
+  "summary": "Price changes between add-to-cart and checkout are silent",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "cart",
+    "pricing"
+  ],
+  "epic": "Cart",
+  "reporter": "priya.n",
+  "assignee": null,
+  "created": "2025-04-03T09:30:00.000Z",
+  "updated": "2025-04-08T14:15:00.000Z",
+  "description": "The cart totals at the current product price, so a shopper can be charged more than the price they saw with no warning.",
+  "acceptance_criteria": [
+    "A price change since the line was added is called out at checkout.",
+    "The shopper must acknowledge before paying."
+  ],
+  "links": []
+}

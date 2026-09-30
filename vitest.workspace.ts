@@ -10,6 +10,16 @@ export default defineWorkspace([
     },
   },
   {
+    // The landing page renders to static markup, so it needs JSX but no DOM.
+    test: {
+      name: "site",
+      include: ["apps/site/tests/**/*.test.tsx"],
+      exclude: ["**/node_modules/**"],
+      environment: "node",
+    },
+    esbuild: { jsx: "automatic" },
+  },
+  {
     test: {
       name: "integration",
       include: ["packages/**/*.integration.test.ts", "apps/**/*.integration.test.ts"],

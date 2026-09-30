@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-114",
+  "summary": "Orders stuck in PENDING_PAYMENT are never cleaned up",
+  "type": "Task",
+  "status": "Open",
+  "priority": "Low",
+  "labels": [
+    "orders",
+    "data"
+  ],
+  "epic": "Orders",
+  "reporter": "lena.b",
+  "assignee": null,
+  "created": "2025-02-17T09:30:00.000Z",
+  "updated": "2025-02-22T14:15:00.000Z",
+  "description": "Abandoned checkouts leave PENDING_PAYMENT rows forever. They inflate the admin export and make demand look higher than it is.",
+  "acceptance_criteria": [
+    "Orders in PENDING_PAYMENT for over 48 hours are cancelled.",
+    "Cancellation is recorded, not a delete."
+  ],
+  "links": []
+}

@@ -1,0 +1,196 @@
+name: "Vibe Check"
+philosophy: "White space, light, almost minimal. A white page, hairlines and the faintest shadows, light type, one ink key and small marks of color. The 3D tile stack and agent relay stay because they explain the product."
+primary_mode: "light"
+brand_domain: "nightly automated QA for apps built with AI"
+brand_type: "ui-rich"
+mono_for_code: true
+mono_for_metrics: false
+
+primitives:
+  colors:
+    neutral:
+      50: "#FFFFFF"
+      100: "#F5F6F9"
+      200: "#E9EBF1"
+      300: "#CDD1DC"
+      400: "#9AA0B2"
+      500: "#5A6072"
+      600: "#434859"
+      700: "#2E3342"
+      800: "#171B26"
+      900: "#0F1116"
+      950: "#171A22"
+    brand:
+      50: "#F1F4FC"
+      100: "#E2E8F8"
+      200: "#CBD6F1"
+      300: "#B4C4EA"
+      400: "#9DB2E0"
+      500: "#8FA6D8"
+      600: "#6B83BE"
+      700: "#3F5294"
+      800: "#2F3D70"
+      900: "#232E54"
+      950: "#182040"
+    red:
+      50: "#F8EEEC"
+      500: "#9A4A43"
+      900: "#3A2220"
+    green:
+      50: "#E6F2EC"
+      500: "#2A7357"
+      900: "#183A2D"
+    amber:
+      50: "#F6F0DE"
+      500: "#7A5A00"
+      900: "#3D2C00"
+  spacing: [0, 2, 4, 8, 16, 24, 32, 48, 64, 96, 128]
+  radii: [0, 12, 16, 20, 24, 32, 999]
+  tints:
+    sky: "#A9C4E8"
+    mint: "#A9D3C2"
+    butter: "#E6D6AA"
+    rose: "#E2B5B0"
+    lilac: "#C5BEE3"
+
+tokens:
+  colors:
+    light:
+      background: "{neutral.50}"
+      surface1: "{neutral.50}"
+      surface2: "{neutral.100}"
+      surface3: "{neutral.200}"
+      border: "#E9EBF1"
+      border_visible: "#7C8294"
+      text1: "{neutral.800}"
+      text2: "{neutral.500}"
+      text3: "{neutral.500}"
+      text4: "{neutral.400}"
+      accent: "{brand.400}"
+      accent_subtle: "{brand.50}"
+    dark:
+      background: "{neutral.900}"
+      surface1: "{neutral.900}"
+      surface2: "{neutral.950}"
+      surface3: "#20242E"
+      border: "#23262F"
+      border_visible: "#7F869A"
+      text1: "#EEF0F6"
+      text2: "#A0A6B8"
+      text3: "#A0A6B8"
+      text4: "#6E7488"
+      accent: "{brand.500}"
+      accent_subtle: "{brand.950}"
+    success: "{green.500}"
+    warning: "{amber.500}"
+    error: "{red.500}"
+    success_bg: { light: "{green.50}", dark: "{green.900}" }
+    warning_bg: { light: "{amber.50}", dark: "{amber.900}" }
+    error_bg: { light: "{red.50}", dark: "{red.900}" }
+
+  spacing:
+    2xs: 2
+    xs: 4
+    sm: 8
+    md: 16
+    lg: 24
+    xl: 32
+    2xl: 48
+    3xl: 64
+    4xl: 96
+
+  radii:
+    element: 16
+    control: 14
+    component: 20
+    container: 24
+    pill: 999
+
+  typography:
+    display: { family: "Bricolage Grotesque", size: "92px", weight: 380, line_height: 1.02 }
+    body: { family: "Bricolage Grotesque", size: "20px", weight: 400, line_height: 1.6 }
+    mono: { family: "Geist Mono", size: "15px", weight: 400 }
+
+  elevation:
+    strategy: "flat"
+
+  motion:
+    personality: "smooth"
+    easing: "cubic-bezier(0.22, 1, 0.36, 1)"
+    duration_fast: "200ms"
+    duration_normal: "260ms"
+
+  hero_stage:
+    preset: "object-on-spotlight"
+    observed_style:
+      description: "Five pale, barely-tinted tiles with hairline edges stacked in 3D perspective on a white page, with a thin periwinkle scan plane passing through them."
+      where_used: ["hero", "how it works", "agents", "footer"]
+    background:
+      medium: "absent"
+      color_mode: "brand-tinted-neutral"
+      saturation: "muted"
+      light_source: "top-l"
+      falloff: "soft"
+      vignette: "off"
+      texture: "clean"
+      motion: "static"
+      intensity: "subtle"
+      safe_zone: "masked-for-text"
+      color_palette: ["#FFFFFF", "#F5F6F9", "#A9C4E8", "#A9D3C2", "#E6D6AA"]
+    hero:
+      subject: "composition"
+      form: "stacked-screens"
+      placement: "right"
+      scale: "large"
+      tint: "none"
+    relation:
+      type: "shadow-only"
+      bleed: 0
+    disclaimer: "Everything is CSS: no stock art and no third-party models."
+
+  iconography:
+    observed_style:
+      description: "One tick, cross and plus at 3.2 stroke with round caps, in ink on soft raised keys; controls (dial, toggle, slider, LED) drawn as neumorphic hardware."
+      stroke_weight: "regular"
+      corner_treatment: "fully-round"
+      fill_style: "outline"
+      form_language: "geometric"
+      visual_density: "minimal"
+    fallback_kit:
+      name: "Phosphor"
+      weight: "regular"
+      match_score: "medium"
+      match_reasoning: "Phosphor regular has round caps and an even stroke that sit quietly on soft surfaces. The brand draws only a tick, cross and plus itself."
+      cdn: "https://unpkg.com/@phosphor-icons/web@2/src/regular/style.css"
+      icon_class_prefix: "ph ph-"
+    disclaimer: "The tick, cross and plus are Vibe Check's own shapes. Phosphor is only a stand-in for glyphs the brand has not drawn yet."
+
+components:
+  button_primary:
+    source: "observed"
+    background: "{neutral.800}"
+    color: "{neutral.50}"
+    padding: "0 36px"
+    radius: "{radii.control}"
+    font_weight: 500
+    hover: { transform: "translateY(-2px)" }
+  card:
+    source: "observed"
+    background: "{neutral.50}"
+    color: "{neutral.800}"
+    padding: "32px 48px"
+    radius: "{radii.container}"
+    font_weight: 400
+    hover: { transform: "translateY(-2px)" }
+
+app_screen:
+  archetype: "list-detail"
+  frame: "browser"
+  frame_params:
+    url: "vibecheck.example/report"
+    title: "Vibe Check, last night"
+  content_seed: "nightly report with one failing checkout check"
+  required_tokens_checklist:
+    - "background, surface1, surface2, surface3, border, border_visible"
+    - "text1, text2, text3, text4"
+    - "accent, accent_subtle, success, warning, error"

@@ -1,0 +1,28 @@
+{
+  "key": "SHOP-107",
+  "summary": "Reset links last far longer than the email claims",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "auth",
+    "security",
+    "email"
+  ],
+  "epic": "Accounts",
+  "reporter": "lena.b",
+  "assignee": null,
+  "created": "2025-01-27T09:30:00.000Z",
+  "updated": "2025-02-01T14:15:00.000Z",
+  "description": "The reset email says the link works for an hour. The token is actually accepted for a full day. That is a wider window than security is comfortable with for an email-borne credential.",
+  "acceptance_criteria": [
+    "A reset token expires one hour after it is issued.",
+    "An expired token gives a clear message and an easy way to request another."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-121"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-116",
+  "summary": "Next page link shown on the last page of results",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Low",
+  "labels": [
+    "catalogue",
+    "ux"
+  ],
+  "epic": "Browse",
+  "reporter": "tom.h",
+  "assignee": null,
+  "created": "2025-02-23T09:30:00.000Z",
+  "updated": "2025-02-28T14:15:00.000Z",
+  "description": "The product list has no total count, so Next is always rendered and takes the shopper to an empty page.",
+  "acceptance_criteria": [
+    "Next is hidden when there is no following page.",
+    "An out-of-range page shows the empty state, not an error."
+  ],
+  "links": []
+}

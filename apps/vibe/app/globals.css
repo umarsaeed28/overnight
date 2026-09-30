@@ -1,0 +1,973 @@
+@import "tailwindcss";
+@import "@oqa/ui/tokens.css";
+@source "../../../packages/ui/src";
+
+/* ---------- Registered properties, so the browser can animate them ---------- */
+@property --explode {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.3;
+}
+@property --scan {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.66;
+}
+@property --tests {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --cam {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --turn {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --lift {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0.7rem;
+}
+
+@layer base {
+  html {
+    background: var(--canvas);
+    scroll-behavior: smooth;
+    scroll-padding-top: 1rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  :focus-visible {
+    outline: 4px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 12px;
+  }
+  button,
+  summary,
+  a[href] {
+    cursor: pointer;
+  }
+  p,
+  li {
+    text-wrap: pretty;
+  }
+  code,
+  pre {
+    font-family: var(--font-mono);
+  }
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+/* ============================================================
+   THE STAGE: five app screens as pale soft tiles in 3D space.
+   Pure CSS 3D (no libraries): perspective, preserve-3d, translateZ.
+   ============================================================ */
+.scene {
+  --gap: clamp(1.6rem, 3.4vw, 3rem);
+  --w: clamp(16rem, 34vw, 32rem);
+  --h: calc(var(--w) * 0.68);
+  --tx: 0;
+  --ty: 0;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.86;
+  perspective: 1700px;
+  perspective-origin: 50% 35%;
+}
+.stack {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: var(--w);
+  height: var(--h);
+  margin: calc(var(--h) / -2) 0 0 calc(var(--w) / -2);
+  transform-style: preserve-3d;
+  transform: rotateX(calc(57deg + var(--ty) * 4deg)) rotateZ(calc(-36deg + var(--cam) * 20deg + var(--tx) * 6deg));
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stack::before {
+  content: "";
+  position: absolute;
+  inset: -28%;
+  background: radial-gradient(closest-side, rgb(23 27 38 / 0.07), transparent 72%);
+  transform: translateZ(calc(var(--gap) * -1.3));
+  pointer-events: none;
+}
+.layer {
+  --t: var(--tint-sky);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 1.4rem;
+  background: color-mix(in srgb, var(--t) 13%, var(--surface));
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  box-shadow: 0 1.4rem 2rem -1.3rem var(--nm-dark);
+  transform: translateZ(calc(var(--n) * var(--gap) * (0.5 + var(--explode) * 1.5)));
+}
+.layer:nth-child(1) {
+  --t: var(--tint-sky);
+}
+.layer:nth-child(2) {
+  --t: var(--tint-mint);
+}
+.layer:nth-child(3) {
+  --t: var(--tint-butter);
+}
+.layer:nth-child(4) {
+  --t: var(--tint-coral);
+}
+.layer:nth-child(5) {
+  --t: var(--tint-lilac);
+}
+.layer .tag {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.layer .bar {
+  height: 0.45rem;
+  border-radius: 9px;
+  background: var(--line);
+}
+.layer .btn {
+  align-self: end;
+  height: 1.5rem;
+  width: 40%;
+  border-radius: 0.7rem;
+  background: var(--ink);
+}
+.layer .chip {
+  position: absolute;
+  right: 0.9rem;
+  top: 0.85rem;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  opacity: var(--tests);
+}
+/* The layer with the bug glows when the scan plane reaches it. */
+.layer--bug::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid var(--bug);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--bug) 55%, transparent);
+  opacity: clamp(0, 1.6 - abs(var(--scan) - 0.66) * 7, 1);
+  pointer-events: none;
+}
+/* The scan plane: a sheet of warm light passing up through the tiles. */
+.scan {
+  position: absolute;
+  inset: -13% -10%;
+  border-radius: 2rem;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 85%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--accent) 3%, transparent));
+  box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 30%, transparent);
+  transform: translateZ(calc((var(--scan) * 5 - 0.3) * var(--gap) * (0.5 + var(--explode) * 1.5)));
+  pointer-events: none;
+}
+/* Ambient: the hero scan sweeps up and back. Off under reduced motion, which holds it on the bug. */
+@media (prefers-reduced-motion: no-preference) {
+  .scene--hero .stack {
+    --explode: 0.45;
+    animation: hero-scan 9s ease-in-out infinite;
+  }
+  @keyframes hero-scan {
+    0%,
+    100% {
+      --scan: 0;
+    }
+    50% {
+      --scan: 0.95;
+    }
+  }
+}
+
+/* ============================================================
+   LEDs: the only ornament left. A small lit dot that breathes.
+   ============================================================ */
+.led {
+  --c: var(--accent);
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent);
+}
+.led--mint {
+  --c: #6fb79a;
+}
+.led--sky {
+  --c: #7fa7d9;
+}
+.led--rose {
+  --c: var(--bug);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .led {
+    animation: led-breathe 3.2s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+  }
+  @keyframes led-breathe {
+    50% {
+      opacity: 0.5;
+    }
+  }
+}
+
+/* ============================================================
+   STORY: a pinned stage that plays as you scroll.
+   Default (no scroll timelines, or reduced motion): plain flow, static exploded scene.
+   ============================================================ */
+.story-stage .scene {
+  --explode: 0.95;
+  --scan: 0.66;
+  --tests: 1;
+}
+/* Phones: a smaller stack pushed below the text, so the exploded layers never cover the copy. */
+@media (max-width: 767px) {
+  .story-stage .scene {
+    --w: 12.5rem;
+    --gap: 1.15rem;
+    aspect-ratio: 1 / 0.8;
+    margin-top: 4.5rem;
+  }
+  .story .steps {
+    min-height: 15.5rem;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .story {
+      height: 340vh;
+      view-timeline: --story block;
+    }
+    .story-stage {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+    }
+    .story .scene,
+    .story .step,
+    .story .story-progress {
+      animation-timeline: --story;
+      animation-range: contain 0% contain 100%;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+    }
+    .story .scene {
+      animation-name: story-explode, story-tests, story-scan, story-cam;
+      animation-duration: 1ms;
+    }
+    @keyframes story-explode {
+      0%,
+      4% {
+        --explode: 0;
+      }
+      36%,
+      100% {
+        --explode: 1;
+      }
+    }
+    @keyframes story-tests {
+      0%,
+      34% {
+        --tests: 0;
+      }
+      46%,
+      100% {
+        --tests: 1;
+      }
+    }
+    @keyframes story-scan {
+      0%,
+      56% {
+        --scan: -0.1;
+      }
+      88%,
+      100% {
+        --scan: 0.66;
+      }
+    }
+    @keyframes story-cam {
+      0% {
+        --cam: 0;
+      }
+      100% {
+        --cam: 1;
+      }
+    }
+    /* The three steps take turns. */
+    .story .step {
+      position: absolute;
+      inset: 0 auto auto 0;
+      animation-duration: 1ms;
+    }
+    .story .step:nth-child(1) {
+      animation-name: step-a;
+    }
+    .story .step:nth-child(2) {
+      animation-name: step-b;
+    }
+    .story .step:nth-child(3) {
+      animation-name: step-c;
+    }
+    @keyframes step-a {
+      0%,
+      26% {
+        opacity: 1;
+        transform: none;
+      }
+      34%,
+      100% {
+        opacity: 0;
+        transform: translateY(-1.5rem);
+      }
+    }
+    @keyframes step-b {
+      0%,
+      28% {
+        opacity: 0;
+        transform: translateY(1.5rem);
+      }
+      38%,
+      60% {
+        opacity: 1;
+        transform: none;
+      }
+      68%,
+      100% {
+        opacity: 0;
+        transform: translateY(-1.5rem);
+      }
+    }
+    @keyframes step-c {
+      0%,
+      62% {
+        opacity: 0;
+        transform: translateY(1.5rem);
+      }
+      72%,
+      100% {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    .story .story-progress {
+      animation-name: progress-grow;
+      animation-duration: 1ms;
+      transform-origin: left;
+    }
+    @keyframes progress-grow {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+    .story .steps {
+      position: relative;
+      min-height: 15rem;
+    }
+  }
+}
+
+/* ============================================================
+   Objects that tilt toward the pointer.
+   ============================================================ */
+.tilt {
+  --tx: 0;
+  --ty: 0;
+  transform: perspective(1100px) rotateX(calc(var(--ty) * -1deg)) rotateY(calc(var(--tx) * 1deg));
+  transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tilt {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   The phone: a soft solid object with thickness, swinging into place as it arrives.
+   ============================================================ */
+.phone {
+  position: relative;
+  width: clamp(17rem, 28vw, 21rem);
+  padding: 0.6rem;
+  border-radius: 3rem;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 30px 60px -30px var(--nm-dark);
+  transform-style: preserve-3d;
+}
+.phone::before,
+.phone::after {
+  background: color-mix(in srgb, var(--surface) 94%, #7b8fa8);
+  transform: translateZ(-6px);
+}
+.phone::before {
+  background: color-mix(in srgb, var(--surface) 88%, #7b8fa8);
+  transform: translateZ(-12px);
+  box-shadow: 0 2.2rem 3rem -1.6rem var(--nm-dark);
+}
+.phone::after {
+  background: color-mix(in srgb, var(--surface) 90%, #7b88ad);
+  transform: translateZ(-7px);
+}
+.phone-screen {
+  position: relative;
+  border-radius: 2.4rem;
+  background: var(--well);
+  color: var(--ink);
+  overflow: hidden;
+  transform: translateZ(1px);
+}
+.phone-notch {
+  position: absolute;
+  left: 50%;
+  top: 0.7rem;
+  width: 4.6rem;
+  height: 1.3rem;
+  margin-left: -2.3rem;
+  border-radius: 999px;
+  background: var(--ink);
+  z-index: 2;
+}
+.phone-rise {
+  transform: perspective(1800px) rotateY(-12deg) rotateX(3deg);
+  transform-style: preserve-3d;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .phone-rise {
+      animation: phone-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+    @keyframes phone-in {
+      from {
+        transform: perspective(1800px) rotateY(-34deg) rotateX(14deg) translateY(7rem);
+        opacity: 0.4;
+      }
+      to {
+        transform: perspective(1800px) rotateY(-12deg) rotateX(3deg) translateY(0);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/* The feature file: each keyword line lights up in turn as you scroll past. */
+.gline {
+  border-radius: 0.6rem;
+  margin-inline: -0.75rem;
+  padding-inline: 0.75rem;
+}
+.gline--lit {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .gline--lit {
+      animation: gline-lit linear both;
+      animation-timeline: view();
+      animation-range: cover var(--a) cover var(--b);
+    }
+    @keyframes gline-lit {
+      from {
+        background: transparent;
+      }
+      to {
+        background: color-mix(in srgb, var(--accent) 26%, transparent);
+      }
+    }
+  }
+}
+
+/* ============================================================
+   THE AGENTS: a relay on an isometric soft floor. Four stations, two kinds of work travelling between them.
+   Real bugs go on to the Reporter; out-of-date tests loop back to the Test writer.
+   ============================================================ */
+.agents-scene {
+  --st: 6rem;
+  --fw: clamp(23rem, 44vw, 42rem);
+  --pitch: calc((var(--fw) - var(--st)) / 3);
+  --row2: calc(var(--st) + 3.6rem);
+  --fh: calc(var(--row2) + var(--st) / 2);
+  --pk: 1rem;
+  position: relative;
+  width: 100%;
+  min-height: 28rem;
+  perspective: 1700px;
+  perspective-origin: 50% 30%;
+}
+.flow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--fw);
+  height: var(--fh);
+  margin: calc(var(--fh) / -2) 0 0 calc(var(--fw) / -2);
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(calc(-38deg + var(--turn) * 14deg));
+}
+.flow::before {
+  content: "";
+  position: absolute;
+  inset: -16% -10%;
+  border-radius: 2.4rem;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 40px 70px -40px var(--nm-dark);
+  transform: translateZ(-1.2rem);
+}
+.track {
+  position: absolute;
+  border: 0 dashed var(--line-strong);
+  transform: translateZ(-0.2rem);
+}
+.track--main {
+  left: calc(var(--st) / 2);
+  top: calc(var(--st) / 2 - 1.5px);
+  width: calc(3 * var(--pitch));
+  border-top-width: 3px;
+}
+.track--down {
+  left: calc(2 * var(--pitch) + var(--st) / 2 - 1.5px);
+  top: calc(var(--st) / 2);
+  height: calc(var(--row2) - var(--st) / 2);
+  border-left-width: 3px;
+}
+.track--back {
+  left: calc(var(--pitch) + var(--st) / 2);
+  top: calc(var(--row2) - 1.5px);
+  width: var(--pitch);
+  border-top-width: 3px;
+}
+.track--up {
+  left: calc(var(--pitch) + var(--st) / 2 - 1.5px);
+  top: calc(var(--st) / 2);
+  height: calc(var(--row2) - var(--st) / 2);
+  border-left-width: 3px;
+}
+.station {
+  --lift: 0.7rem;
+  --t: var(--tint-sky);
+  position: absolute;
+  top: 0;
+  left: calc(var(--k) * var(--pitch));
+  width: var(--st);
+  height: var(--st);
+  display: grid;
+  place-items: center;
+  border-radius: 1.3rem;
+  background: color-mix(in srgb, var(--t) 22%, var(--surface));
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-weight: 450;
+  font-size: 1.7rem;
+  transform-style: preserve-3d;
+  transform: translateZ(var(--lift));
+}
+.station[data-k="0"] {
+  --t: var(--tint-sky);
+}
+.station[data-k="1"] {
+  --t: var(--tint-mint);
+}
+.station[data-k="2"] {
+  --t: var(--tint-butter);
+}
+.station[data-k="3"] {
+  --t: var(--tint-lilac);
+}
+.station::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--t) 30%, color-mix(in srgb, var(--surface) 88%, #7b8fa8));
+  transform: translateZ(-0.6rem);
+  box-shadow: 0 30px 40px -20px var(--nm-dark);
+}
+/* Name labels stand upright and face the camera, turning with the relay. */
+.station-tag {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform: translateZ(3rem);
+  pointer-events: none;
+}
+.station-tag > span {
+  display: block;
+  white-space: nowrap;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  transform: translate(-50%, -150%) rotateZ(calc(38deg - var(--turn) * 14deg)) rotateX(-58deg);
+  transform-origin: 50% 100%;
+}
+.packet {
+  position: absolute;
+  width: var(--pk);
+  height: var(--pk);
+  border-radius: 50%;
+  transform: translateZ(2.1rem);
+}
+.packet--bug {
+  background: var(--bug);
+  box-shadow: 0 0 14px 2px color-mix(in srgb, var(--bug) 50%, transparent);
+  left: calc(3 * var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+  top: calc(var(--st) / 2 - var(--pk) / 2);
+}
+.packet--stale {
+  background: #6fb79a;
+  box-shadow: 0 0 14px 2px rgb(111 183 154 / 0.45);
+  left: calc(var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+  top: calc(var(--row2) - var(--pk) / 2);
+}
+/* Hover or focus an agent in the list and its station lifts. */
+.agents:has(li[data-k="0"]:hover) .station[data-k="0"],
+.agents:has(li[data-k="1"]:hover) .station[data-k="1"],
+.agents:has(li[data-k="2"]:hover) .station[data-k="2"],
+.agents:has(li[data-k="3"]:hover) .station[data-k="3"] {
+  --lift: 2rem;
+}
+@media (max-width: 767px) {
+  .agents-scene {
+    --st: 4.2rem;
+    --fw: 19rem;
+    --row2: calc(var(--st) + 3rem);
+    min-height: 19rem;
+  }
+  .station {
+    font-size: 1.3rem;
+  }
+  .station-tag > span {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .packet--bug {
+    animation: pkt-bug 14s linear infinite;
+  }
+  .packet--stale {
+    animation: pkt-stale 14s linear infinite;
+  }
+  .station[data-k="0"] {
+    animation: st-0 14s ease-in-out infinite;
+  }
+  .station[data-k="1"] {
+    animation: st-1 14s ease-in-out infinite;
+  }
+  .station[data-k="2"] {
+    animation: st-2 14s ease-in-out infinite;
+  }
+  .station[data-k="3"] {
+    animation: st-3 14s ease-in-out infinite;
+  }
+  @keyframes pkt-bug {
+    0%,
+    2% {
+      left: calc(var(--st) / 2 - var(--pk) / 2);
+      opacity: 0;
+    }
+    4%,
+    12% {
+      left: calc(var(--st) / 2 - var(--pk) / 2);
+      opacity: 1;
+    }
+    17%,
+    21% {
+      left: calc(var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+    }
+    34%,
+    38% {
+      left: calc(2 * var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+    }
+    52%,
+    64% {
+      left: calc(3 * var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+      opacity: 1;
+    }
+    70%,
+    100% {
+      left: calc(3 * var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+      opacity: 0;
+    }
+  }
+  @keyframes pkt-stale {
+    0%,
+    36% {
+      left: calc(2 * var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+      top: calc(var(--st) / 2 - var(--pk) / 2);
+      opacity: 0;
+    }
+    38% {
+      left: calc(2 * var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+      top: calc(var(--st) / 2 - var(--pk) / 2);
+      opacity: 1;
+    }
+    45% {
+      left: calc(2 * var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+      top: calc(var(--row2) - var(--pk) / 2);
+    }
+    55% {
+      left: calc(var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+      top: calc(var(--row2) - var(--pk) / 2);
+    }
+    63%,
+    73% {
+      left: calc(var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+      top: calc(var(--st) / 2 - var(--pk) / 2);
+      opacity: 1;
+    }
+    78%,
+    100% {
+      left: calc(var(--pitch) + var(--st) / 2 - var(--pk) / 2);
+      top: calc(var(--st) / 2 - var(--pk) / 2);
+      opacity: 0;
+    }
+  }
+  @keyframes st-0 {
+    0%,
+    1% {
+      --lift: 0.7rem;
+    }
+    4%,
+    12% {
+      --lift: 2rem;
+    }
+    17%,
+    100% {
+      --lift: 0.7rem;
+    }
+  }
+  @keyframes st-1 {
+    0%,
+    13% {
+      --lift: 0.7rem;
+    }
+    17%,
+    25% {
+      --lift: 2rem;
+    }
+    30%,
+    58% {
+      --lift: 0.7rem;
+    }
+    63%,
+    72% {
+      --lift: 2rem;
+    }
+    77%,
+    100% {
+      --lift: 0.7rem;
+    }
+  }
+  @keyframes st-2 {
+    0%,
+    30% {
+      --lift: 0.7rem;
+    }
+    34%,
+    42% {
+      --lift: 2rem;
+    }
+    47%,
+    100% {
+      --lift: 0.7rem;
+    }
+  }
+  @keyframes st-3 {
+    0%,
+    48% {
+      --lift: 0.7rem;
+    }
+    52%,
+    64% {
+      --lift: 2rem;
+    }
+    70%,
+    100% {
+      --lift: 0.7rem;
+    }
+  }
+}
+/* As the section scrolls in, the whole relay turns a little toward you. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .agents-scene {
+      animation: agents-turn linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+    @keyframes agents-turn {
+      from {
+        --turn: 0;
+      }
+      to {
+        --turn: 1;
+      }
+    }
+  }
+}
+
+/* ============================================================
+   THE ARCHITECTURE: a solutions-architect diagram. Lanes top to bottom: your systems, the four
+   agents, the knowledge layer (RAG), evals and people. Dashed lines are data flowing; the agents
+   light up in turn. A still picture under reduced motion.
+   ============================================================ */
+.dg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.dg-lane {
+  fill: color-mix(in srgb, var(--well) 55%, transparent);
+  stroke: var(--line);
+}
+.dg-tag rect {
+  fill: var(--canvas);
+  stroke: var(--line-strong);
+}
+.dg-tag text {
+  fill: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 500;
+}
+.dg-box {
+  fill: var(--surface);
+  stroke: var(--line-strong);
+}
+.dg-agent {
+  fill: var(--surface);
+  stroke: var(--edge);
+  stroke-width: 1.25;
+}
+.dg-rag {
+  fill: color-mix(in srgb, var(--tint-mint) 16%, var(--surface));
+  stroke: var(--line-strong);
+}
+.dg-human {
+  fill: color-mix(in srgb, var(--tint-butter) 16%, var(--surface));
+  stroke: var(--line-strong);
+}
+.dg-eval {
+  fill: color-mix(in srgb, var(--tint-sky) 16%, var(--surface));
+  stroke: var(--line-strong);
+}
+.dg-title {
+  fill: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+}
+.dg-agent-title {
+  fill: var(--ink);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.dg-sub {
+  fill: var(--ink-soft);
+  font-size: 13.5px;
+  font-weight: 400;
+}
+.dg-flow {
+  fill: none;
+  stroke: var(--edge);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+.dg-flow--dash {
+  stroke-dasharray: 5 6;
+}
+.dg-flow--feed {
+  stroke: var(--pass);
+}
+.dg-head {
+  fill: var(--edge);
+}
+.dg-head--feed {
+  fill: var(--pass);
+}
+.dg-rail {
+  fill: var(--pass);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dg-flow--dash {
+    animation: dg-dash 1.4s linear infinite;
+  }
+  .dg-agent {
+    animation: dg-lit 12s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 3s);
+  }
+  @keyframes dg-dash {
+    to {
+      stroke-dashoffset: -22;
+    }
+  }
+  @keyframes dg-lit {
+    0%,
+    22% {
+      stroke: var(--accent-text);
+      stroke-width: 2;
+      fill: color-mix(in srgb, var(--accent) 14%, var(--surface));
+    }
+    30%,
+    100% {
+      stroke: var(--edge);
+      stroke-width: 1.25;
+      fill: var(--surface);
+    }
+  }
+}

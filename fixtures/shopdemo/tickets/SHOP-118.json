@@ -1,0 +1,26 @@
+{
+  "key": "SHOP-118",
+  "summary": "Add a phone field to the shipping address form",
+  "type": "Task",
+  "status": "Done",
+  "priority": "Medium",
+  "labels": [
+    "checkout"
+  ],
+  "epic": "Guest checkout",
+  "reporter": "marta.s",
+  "assignee": "lena.b",
+  "created": "2025-03-01T09:30:00.000Z",
+  "updated": "2025-03-06T14:15:00.000Z",
+  "description": "Add an optional phone input to the address form so the courier has something to work with. Making it mandatory is a separate decision.",
+  "acceptance_criteria": [
+    "The address form has a Phone input.",
+    "The value reaches the order record."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-101"
+    }
+  ]
+}

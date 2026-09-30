@@ -1,0 +1,28 @@
+{
+  "key": "SHOP-104",
+  "summary": "Account lockout triggers later than documented",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "auth",
+    "security"
+  ],
+  "epic": "Accounts",
+  "reporter": "marta.s",
+  "assignee": null,
+  "created": "2025-01-18T09:30:00.000Z",
+  "updated": "2025-01-23T14:15:00.000Z",
+  "description": "The accounts page says an account locks after 3 failed sign-ins. In practice it takes 5. Security want 3.",
+  "acceptance_criteria": [
+    "The third consecutive failure locks the account.",
+    "A locked account answers 423 even with the right password.",
+    "A successful sign-in resets the counter."
+  ],
+  "links": [
+    {
+      "relation": "is blocked by",
+      "key": "SHOP-103"
+    }
+  ]
+}

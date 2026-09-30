@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-130",
+  "summary": "Add an admin product edit page",
+  "type": "Story",
+  "status": "Done",
+  "priority": "High",
+  "labels": [
+    "admin",
+    "catalogue"
+  ],
+  "epic": "Admin",
+  "reporter": "tom.h",
+  "assignee": "dev.r",
+  "created": "2025-04-06T09:30:00.000Z",
+  "updated": "2025-04-11T14:15:00.000Z",
+  "description": "Staff needed a way to change price, stock, description and visibility without a database client.",
+  "acceptance_criteria": [
+    "An admin can edit name, description, price, stock, and visibility.",
+    "A non-admin gets 403 from the API and a redirect in the UI."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-108"
+    }
+  ]
+}

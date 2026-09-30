@@ -1,0 +1,28 @@
+{
+  "key": "SHOP-103",
+  "summary": "Password minimum length is inconsistent between docs and signup",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "auth",
+    "security"
+  ],
+  "epic": "Accounts",
+  "reporter": "alex.k",
+  "assignee": null,
+  "created": "2025-01-15T09:30:00.000Z",
+  "updated": "2025-01-20T14:15:00.000Z",
+  "description": "Our security page says passwords must be at least 12 characters. Signup accepts an 8 character password. Security review flagged this as a documentation-versus-implementation gap; they want the code raised to 12, not the docs lowered to 8.",
+  "acceptance_criteria": [
+    "Signup rejects passwords under 12 characters.",
+    "Password reset applies the same rule.",
+    "The error message states the actual minimum."
+  ],
+  "links": [
+    {
+      "relation": "blocks",
+      "key": "SHOP-104"
+    }
+  ]
+}

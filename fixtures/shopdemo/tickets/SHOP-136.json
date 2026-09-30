@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-136",
+  "summary": "Email delivery failures are invisible",
+  "type": "Task",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "email",
+    "observability"
+  ],
+  "epic": "Platform",
+  "reporter": "priya.n",
+  "assignee": null,
+  "created": "2025-04-24T09:30:00.000Z",
+  "updated": "2025-04-29T14:15:00.000Z",
+  "description": "SMTP failures are neither retried nor recorded. A shopper whose receipt bounces simply never receives one and we never find out.",
+  "acceptance_criteria": [
+    "A send failure is recorded with the order or token it relates to.",
+    "Failures are retried at least twice."
+  ],
+  "links": []
+}

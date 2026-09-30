@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces */
+  --color-washi: #fbf8f3;
+  --color-sakura: #f6d6de;
+  --color-sora: #d6e6f5;
+  --color-matcha: #d5efe3;
+  --color-kinako: #fbefc5;
+  --color-fuji: #e6ddf5;
+
+  /* Text and line art */
+  --color-ink: #2e2b45;
+  --color-softink: #5c5873;
+
+  /* Accent. Stamps and dots only, never text. */
+  --color-hanko: #e8907e;
+
+  --font-heading: var(--font-zen-maru-gothic), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-kanji: "Shippori Mincho", ui-serif, serif;
+
+  --radius-card: 24px;
+
+  /* Large blur, low opacity, a touch of lavender. */
+  --shadow-card: 0 24px 60px -24px rgba(46, 43, 69, 0.18);
+  --shadow-lift: 0 14px 30px -12px rgba(46, 43, 69, 0.28);
+
+  --text-hero: 64px;
+  --text-hero--line-height: 1.04;
+  --text-hero--letter-spacing: -0.03em;
+  --text-section: 40px;
+  --text-section--line-height: 1.1;
+  --text-section--letter-spacing: -0.02em;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-washi);
+    color: var(--color-softink);
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* One visible focus treatment everywhere, per the accessibility rule. */
+  :focus-visible {
+    outline: 3px solid var(--color-sora);
+    outline-offset: 3px;
+    border-radius: 9999px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* The dusk to dawn scroll story. Every stop stays pastel. */
+  .bg-duskToDawn {
+    background-image: linear-gradient(
+      180deg,
+      var(--color-fuji) 0%,
+      color-mix(in srgb, var(--color-fuji) 55%, var(--color-washi)) 12%,
+      var(--color-sora) 34%,
+      color-mix(in srgb, var(--color-sora) 60%, var(--color-washi)) 58%,
+      var(--color-washi) 72%,
+      var(--color-kinako) 88%,
+      var(--color-sakura) 100%
+    );
+  }
+
+  .card-surface {
+    background-color: rgb(255 255 255 / 0.72);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Only simple fades survive. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15ms !important;
+  }
+}

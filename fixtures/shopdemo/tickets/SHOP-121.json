@@ -1,0 +1,26 @@
+{
+  "key": "SHOP-121",
+  "summary": "Requesting a new reset link should invalidate the old one",
+  "type": "Story",
+  "status": "Done",
+  "priority": "Medium",
+  "labels": [
+    "auth"
+  ],
+  "epic": "Accounts",
+  "reporter": "lena.b",
+  "assignee": "alex.k",
+  "created": "2025-03-10T09:30:00.000Z",
+  "updated": "2025-03-15T14:15:00.000Z",
+  "description": "Several outstanding reset links per account widened the attack surface. Only the newest link should work.",
+  "acceptance_criteria": [
+    "Issuing a token marks earlier unused tokens for that account as used.",
+    "An old link shows the expired message."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-107"
+    }
+  ]
+}

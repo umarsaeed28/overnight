@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-120",
+  "summary": "Forgot password always answers 202",
+  "type": "Task",
+  "status": "Done",
+  "priority": "Medium",
+  "labels": [
+    "auth",
+    "security"
+  ],
+  "epic": "Accounts",
+  "reporter": "sam.o",
+  "assignee": "tom.h",
+  "created": "2025-03-07T09:30:00.000Z",
+  "updated": "2025-03-12T14:15:00.000Z",
+  "description": "The forgot-password endpoint used to 404 for unknown addresses, which enumerated accounts. It now answers 202 either way and only sends mail when an account exists.",
+  "acceptance_criteria": [
+    "202 for known and unknown addresses.",
+    "No email is sent for an unknown address."
+  ],
+  "links": []
+}

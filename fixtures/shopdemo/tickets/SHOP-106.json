@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-106",
+  "summary": "Free shipping threshold disagrees with the marketing page",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "shipping",
+    "pricing"
+  ],
+  "epic": "Fulfilment",
+  "reporter": "sam.o",
+  "assignee": null,
+  "created": "2025-01-24T09:30:00.000Z",
+  "updated": "2025-01-29T14:15:00.000Z",
+  "description": "The shipping page promises free shipping over $50. Checkout only waives the fee over $75. Customers who read the page and hit $60 are charged and open a ticket.",
+  "acceptance_criteria": [
+    "One threshold value used by both the code and the page.",
+    "The cart shows how much more is needed to qualify."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-131"
+    }
+  ]
+}

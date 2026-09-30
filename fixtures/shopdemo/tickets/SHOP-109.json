@@ -1,0 +1,28 @@
+{
+  "key": "SHOP-109",
+  "summary": "AWAITING_STOCK orders cannot be represented",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "orders",
+    "warehouse"
+  ],
+  "epic": "Orders",
+  "reporter": "tom.h",
+  "assignee": null,
+  "created": "2025-02-02T09:30:00.000Z",
+  "updated": "2025-02-07T14:15:00.000Z",
+  "description": "The order lifecycle page documents an AWAITING_STOCK status between PAID and SHIPPED. The database enum has no such value, so the warehouse leaves short orders in PAID and tracks them on a whiteboard.",
+  "acceptance_criteria": [
+    "AWAITING_STOCK exists as an order status.",
+    "PAID -> AWAITING_STOCK -> SHIPPED is allowed.",
+    "Order history renders the new status."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-151"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-137",
+  "summary": "No audit trail for admin catalogue edits",
+  "type": "Story",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "admin",
+    "audit"
+  ],
+  "epic": "Admin",
+  "reporter": "tom.h",
+  "assignee": null,
+  "created": "2025-04-27T09:30:00.000Z",
+  "updated": "2025-05-02T14:15:00.000Z",
+  "description": "After the price incident nobody could say who made the edit. The only evidence is an updatedAt timestamp.",
+  "acceptance_criteria": [
+    "Every product edit records who, when, and the before and after values.",
+    "The record cannot be edited from the admin UI."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-108"
+    }
+  ]
+}

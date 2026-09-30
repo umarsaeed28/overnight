@@ -1,0 +1,23 @@
+{
+  "key": "SHOP-108",
+  "summary": "Admin can change a price by any amount",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "admin",
+    "catalogue"
+  ],
+  "epic": "Admin",
+  "reporter": "priya.n",
+  "assignee": null,
+  "created": "2025-01-30T09:30:00.000Z",
+  "updated": "2025-02-04T14:15:00.000Z",
+  "description": "The admin guide says a single edit cannot move a price by more than 50%. No such check exists. An admin fat-fingered $89.00 to $8.90 and we sold 40 units before anyone noticed.",
+  "acceptance_criteria": [
+    "An edit that changes the price by more than 50% is rejected.",
+    "The message tells the admin the allowed range.",
+    "The limit applies in both directions."
+  ],
+  "links": []
+}

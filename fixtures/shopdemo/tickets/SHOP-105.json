@@ -1,0 +1,24 @@
+{
+  "key": "SHOP-105",
+  "summary": "Guest orders are not capped at $500",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "checkout",
+    "guest",
+    "risk"
+  ],
+  "epic": "Guest checkout",
+  "reporter": "dev.r",
+  "assignee": null,
+  "created": "2025-01-21T09:30:00.000Z",
+  "updated": "2025-01-26T14:15:00.000Z",
+  "description": "Risk signed off guest checkout on the basis of a $500 ceiling. There is no ceiling in the code; we took a $2,300 guest order last week and it charged back. Above $500 the shopper should be asked to create an account.",
+  "acceptance_criteria": [
+    "A guest order over $500 is rejected before payment.",
+    "The shopper is offered account creation with the cart intact.",
+    "A signed-in shopper has no such limit."
+  ],
+  "links": []
+}

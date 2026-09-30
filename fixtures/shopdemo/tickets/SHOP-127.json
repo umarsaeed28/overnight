@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-127",
+  "summary": "Order statuses are shown as raw enum values",
+  "type": "Task",
+  "status": "Open",
+  "priority": "Low",
+  "labels": [
+    "orders",
+    "ux"
+  ],
+  "epic": "Orders",
+  "reporter": "sam.o",
+  "assignee": null,
+  "created": "2025-03-28T09:30:00.000Z",
+  "updated": "2025-04-02T14:15:00.000Z",
+  "description": "Shoppers see PENDING_PAYMENT. They ask support what it means roughly once a day.",
+  "acceptance_criteria": [
+    "Each status renders a plain-English label.",
+    "The label explains what happens next."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-109"
+    }
+  ]
+}

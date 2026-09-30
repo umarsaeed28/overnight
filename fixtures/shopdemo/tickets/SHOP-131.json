@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-131",
+  "summary": "Make the free shipping threshold configurable",
+  "type": "Task",
+  "status": "Done",
+  "priority": "Medium",
+  "labels": [
+    "shipping",
+    "pricing"
+  ],
+  "epic": "Fulfilment",
+  "reporter": "alex.k",
+  "assignee": "sam.o",
+  "created": "2025-04-09T09:30:00.000Z",
+  "updated": "2025-04-14T14:15:00.000Z",
+  "description": "Marketing change the threshold during promotions. It now lives as a single constant rather than being scattered.",
+  "acceptance_criteria": [
+    "One constant defines the threshold.",
+    "Changing it changes both the cart and checkout totals."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-106"
+    }
+  ]
+}

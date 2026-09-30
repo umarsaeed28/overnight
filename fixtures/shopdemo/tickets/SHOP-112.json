@@ -1,0 +1,23 @@
+{
+  "key": "SHOP-112",
+  "summary": "Guest sees purchased items still in the cart",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "cart",
+    "checkout",
+    "guest"
+  ],
+  "epic": "Guest checkout",
+  "reporter": "dev.r",
+  "assignee": null,
+  "created": "2025-02-11T09:30:00.000Z",
+  "updated": "2025-02-16T14:15:00.000Z",
+  "description": "The cart is only cleared for signed-in shoppers after payment. A guest who presses back sees the items they just bought and often buys them twice.",
+  "acceptance_criteria": [
+    "A successful guest payment clears the cart cookie's cart.",
+    "Returning to the cart shows the empty state."
+  ],
+  "links": []
+}

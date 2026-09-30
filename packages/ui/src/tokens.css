@@ -1,0 +1,180 @@
+/* Vibe Check design tokens: white space, light, almost minimal. Documented in docs/design/landing-direction.md. */
+
+@property --depth {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+:root {
+  color-scheme: light;
+  --canvas: #ffffff;
+  --surface: #ffffff;
+  --well: #f5f6f9;
+  --ink: #171b26;
+  --ink-soft: #5a6072;
+  --line: rgb(23 27 38 / 0.09);
+  --line-strong: rgb(23 27 38 / 0.2);
+  /* Controls keep a real edge (3:1 or better). */
+  --edge: #7c8294;
+  /* Small marks only: numbers, the beam, LEDs. The main key is ink. */
+  --accent: #7b8fd8;
+  --accent-ink: #ffffff;
+  --accent-text: #4a5bb5;
+  --bug: #d29a94;
+  --bug-text: #9a4a43;
+  --pass: #2a7357;
+  --focus: #4a5bb5;
+  --nm-dark: rgb(23 27 38 / 0.1);
+  --nm-light: rgb(255 255 255 / 0);
+  /* Very pale tints: a hint of colour, never a block of it. */
+  --tint-coral: #e2b5b0;
+  --tint-butter: #e6d6aa;
+  --tint-mint: #a9d3c2;
+  --tint-sky: #a9c4e8;
+  --tint-lilac: #c5bee3;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --canvas: #0f1116;
+    --surface: #0f1116;
+    --well: #171a22;
+    --ink: #eef0f6;
+    --ink-soft: #a0a6b8;
+    --line: rgb(238 240 246 / 0.1);
+    --line-strong: rgb(238 240 246 / 0.22);
+    --edge: #7f869a;
+    --accent: #8fa6d8;
+    --accent-ink: #0f1116;
+    --accent-text: #a9bdeb;
+    --bug: #c98a84;
+    --bug-text: #e4a39c;
+    --pass: #8ccfb2;
+    --focus: #b9c0ff;
+    --nm-dark: rgb(0 0 0 / 0.5);
+  }
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-well: var(--well);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-edge: var(--edge);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-text: var(--accent-text);
+  --color-bug: var(--bug);
+  --color-bug-text: var(--bug-text);
+  --color-pass: var(--pass);
+  --color-focus: var(--focus);
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* Display voice: light and quiet. Large, thin-stroked, tightly tracked. */
+.vc-display {
+  font-weight: 380;
+  font-variation-settings: "wdth" 100;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+/* ---------- Surfaces, kept almost flat ----------
+   Raised: a white card with a hairline and the faintest shadow. */
+.nm {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--r, 1.5rem);
+  box-shadow:
+    0 1px 2px rgb(23 27 38 / 0.04),
+    0 18px 40px -22px var(--nm-dark);
+}
+.nm-sm {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--r, 1rem);
+  box-shadow: 0 1px 2px rgb(23 27 38 / 0.04);
+}
+/* Recessed: a light grey field, for things you read or type into. */
+.nm-inset {
+  background: var(--well);
+  color: var(--ink);
+  border-radius: var(--r, 1.25rem);
+}
+.nm-inset-sm {
+  background: var(--well);
+  color: var(--ink);
+  border-radius: var(--r, 0.9rem);
+}
+/* Tints: a pigment at 14% into the surface. Text stays ink. */
+.nm-coral {
+  background: color-mix(in srgb, var(--tint-coral) 14%, var(--surface));
+}
+.nm-butter {
+  background: color-mix(in srgb, var(--tint-butter) 16%, var(--surface));
+}
+.nm-mint {
+  background: color-mix(in srgb, var(--tint-mint) 16%, var(--surface));
+}
+.nm-sky {
+  background: color-mix(in srgb, var(--tint-sky) 16%, var(--surface));
+}
+.nm-lilac {
+  background: color-mix(in srgb, var(--tint-lilac) 18%, var(--surface));
+}
+/* The one solid key: ink on the page colour. */
+.nm-key {
+  color: var(--canvas);
+  background: var(--ink);
+  border-radius: var(--r, 1rem);
+  box-shadow: 0 10px 24px -14px rgb(23 27 38 / 0.5);
+}
+.nm-press {
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms ease-out;
+}
+.nm-press:hover {
+  transform: translateY(-1px);
+}
+.nm-press:active {
+  transform: translateY(0) scale(0.99);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nm-press {
+    transition: none;
+  }
+  .nm-press:hover,
+  .nm-press:active {
+    transform: none;
+  }
+}
+/* Emerge: things fade up a little as they scroll into view. Needs scroll timelines. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .nm-emerge {
+      animation: nm-emerge linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    @keyframes nm-emerge {
+      from {
+        opacity: 0;
+        transform: translateY(1.25rem);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "key": "SHOP-123",
+  "summary": "Declined card should answer 402 and allow a retry",
+  "type": "Bug",
+  "status": "Done",
+  "priority": "High",
+  "labels": [
+    "checkout",
+    "payments"
+  ],
+  "epic": "Payments",
+  "reporter": "tom.h",
+  "assignee": "dev.r",
+  "created": "2025-03-16T09:30:00.000Z",
+  "updated": "2025-03-21T14:15:00.000Z",
+  "description": "A decline used to surface as a 500 and an error page. It now answers 402, keeps the order pending, and lets the shopper try another card.",
+  "acceptance_criteria": [
+    "A declined charge answers 402.",
+    "The order stays PENDING_PAYMENT.",
+    "The shopper can submit a different card without rebuilding the cart."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-122"
+    }
+  ]
+}

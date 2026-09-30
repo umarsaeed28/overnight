@@ -1,0 +1,26 @@
+{
+  "key": "SHOP-139",
+  "summary": "No email verification at registration",
+  "type": "Story",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "auth"
+  ],
+  "epic": "Accounts",
+  "reporter": "marta.s",
+  "assignee": null,
+  "created": "2025-05-03T09:30:00.000Z",
+  "updated": "2025-05-08T14:15:00.000Z",
+  "description": "Accounts work immediately with an unverified address, so a typo means a shopper never gets a receipt and cannot reset the password.",
+  "acceptance_criteria": [
+    "Registration sends a verification email.",
+    "An unverified account can browse but not check out."
+  ],
+  "links": [
+    {
+      "relation": "blocks",
+      "key": "SHOP-125"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-111",
+  "summary": "Stock is never decremented after a purchase",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "inventory",
+    "orders"
+  ],
+  "epic": "Orders",
+  "reporter": "marta.s",
+  "assignee": null,
+  "created": "2025-02-08T09:30:00.000Z",
+  "updated": "2025-02-13T14:15:00.000Z",
+  "description": "Buying a product leaves its stock number untouched. The storefront keeps offering sold-out products until an admin edits the number by hand.",
+  "acceptance_criteria": [
+    "A successful charge decrements stock for each line.",
+    "Stock never goes below zero."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-141"
+    }
+  ]
+}

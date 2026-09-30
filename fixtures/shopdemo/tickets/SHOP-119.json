@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-119",
+  "summary": "Sign-in errors leak whether an email is registered",
+  "type": "Bug",
+  "status": "Done",
+  "priority": "High",
+  "labels": [
+    "auth",
+    "security"
+  ],
+  "epic": "Accounts",
+  "reporter": "dev.r",
+  "assignee": "priya.n",
+  "created": "2025-03-04T09:30:00.000Z",
+  "updated": "2025-03-09T14:15:00.000Z",
+  "description": "'No account with that email' told an attacker which addresses to attack. Replaced with a single message for every failure.",
+  "acceptance_criteria": [
+    "Every sign-in failure produces the same message and status.",
+    "Timing does not obviously differ between the two cases."
+  ],
+  "links": []
+}

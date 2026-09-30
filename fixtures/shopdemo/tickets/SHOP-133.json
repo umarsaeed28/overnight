@@ -1,0 +1,26 @@
+{
+  "key": "SHOP-133",
+  "summary": "Document the cart lifetime on the cart page",
+  "type": "Task",
+  "status": "Open",
+  "priority": "Low",
+  "labels": [
+    "cart",
+    "docs"
+  ],
+  "epic": "Cart",
+  "reporter": "dev.r",
+  "assignee": null,
+  "created": "2025-04-15T09:30:00.000Z",
+  "updated": "2025-04-20T14:15:00.000Z",
+  "description": "Nothing in the UI says when a cart expires, so whatever we settle on in SHOP-102 needs saying on the page.",
+  "acceptance_criteria": [
+    "The cart page states the expiry in plain language."
+  ],
+  "links": [
+    {
+      "relation": "is blocked by",
+      "key": "SHOP-102"
+    }
+  ]
+}

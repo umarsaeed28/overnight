@@ -1,0 +1,21 @@
+{
+  "key": "SHOP-126",
+  "summary": "Order history has no pagination",
+  "type": "Task",
+  "status": "Open",
+  "priority": "Low",
+  "labels": [
+    "orders",
+    "performance"
+  ],
+  "epic": "Orders",
+  "reporter": "dev.r",
+  "assignee": null,
+  "created": "2025-03-25T09:30:00.000Z",
+  "updated": "2025-03-30T14:15:00.000Z",
+  "description": "Every order an account owns is rendered in one table. Our largest account has 340 and the page takes four seconds.",
+  "acceptance_criteria": [
+    "Order history pages at 20 per page."
+  ],
+  "links": []
+}

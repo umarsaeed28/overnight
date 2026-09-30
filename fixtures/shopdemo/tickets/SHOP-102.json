@@ -1,0 +1,26 @@
+{
+  "key": "SHOP-102",
+  "summary": "Cart empties after a day, customers complain",
+  "type": "Bug",
+  "status": "In Progress",
+  "priority": "Medium",
+  "labels": [
+    "cart"
+  ],
+  "epic": "Cart",
+  "reporter": "tom.h",
+  "assignee": "dev.r",
+  "created": "2025-01-12T09:30:00.000Z",
+  "updated": "2025-01-17T14:15:00.000Z",
+  "description": "Support keeps hearing that carts survive for about a week even though the help page tells customers a cart lasts 24 hours. Whichever is right, the two need to agree. Product thinks a week is the better behaviour.",
+  "acceptance_criteria": [
+    "Documented cart lifetime matches the implemented lifetime.",
+    "The cart page states when the cart expires."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-133"
+    }
+  ]
+}

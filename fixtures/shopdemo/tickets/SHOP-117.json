@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-117",
+  "summary": "Search does not look at descriptions or SKU",
+  "type": "Story",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "catalogue",
+    "search"
+  ],
+  "epic": "Browse",
+  "reporter": "alex.k",
+  "assignee": null,
+  "created": "2025-02-26T09:30:00.000Z",
+  "updated": "2025-03-03T14:15:00.000Z",
+  "description": "Search matches the product name only. Shoppers searching for a material or a SKU from a receipt find nothing.",
+  "acceptance_criteria": [
+    "Search matches name, description, and SKU.",
+    "Results stay ordered by name."
+  ],
+  "links": []
+}

@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-125",
+  "summary": "Guest orders should be claimable by a matching account",
+  "type": "Story",
+  "status": "Open",
+  "priority": "Low",
+  "labels": [
+    "guest",
+    "orders"
+  ],
+  "epic": "Guest checkout",
+  "reporter": "marta.s",
+  "assignee": null,
+  "created": "2025-03-22T09:30:00.000Z",
+  "updated": "2025-03-27T14:15:00.000Z",
+  "description": "Someone who checks out as a guest and later registers with the same email cannot see that order anywhere.",
+  "acceptance_criteria": [
+    "Registering attaches past guest orders with a verified matching email.",
+    "Attaching is only done after the email is proven."
+  ],
+  "links": []
+}

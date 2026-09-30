@@ -1,0 +1,21 @@
+{
+  "key": "SHOP-140",
+  "summary": "Checkout with an empty cart should not be reachable",
+  "type": "Bug",
+  "status": "Done",
+  "priority": "Low",
+  "labels": [
+    "checkout"
+  ],
+  "epic": "Guest checkout",
+  "reporter": "dev.r",
+  "assignee": "priya.n",
+  "created": "2025-05-06T09:30:00.000Z",
+  "updated": "2025-05-11T14:15:00.000Z",
+  "description": "Hitting /checkout directly with nothing in the cart used to render a form that always failed. It now redirects to the cart.",
+  "acceptance_criteria": [
+    "An empty cart at checkout redirects to /cart.",
+    "The cart shows its empty state."
+  ],
+  "links": []
+}

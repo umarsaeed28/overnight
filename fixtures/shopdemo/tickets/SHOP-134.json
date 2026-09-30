@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-134",
+  "summary": "Out-of-stock products can still be added from a stale page",
+  "type": "Bug",
+  "status": "Done",
+  "priority": "Medium",
+  "labels": [
+    "cart",
+    "inventory"
+  ],
+  "epic": "Cart",
+  "reporter": "sam.o",
+  "assignee": "tom.h",
+  "created": "2025-04-18T09:30:00.000Z",
+  "updated": "2025-04-23T14:15:00.000Z",
+  "description": "The quantity cap is client-side. A page left open let a shopper add stock that no longer existed; the server now re-checks and answers 409.",
+  "acceptance_criteria": [
+    "Adding more than current stock answers 409.",
+    "The product page shows 'Not enough stock'."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-111"
+    }
+  ]
+}

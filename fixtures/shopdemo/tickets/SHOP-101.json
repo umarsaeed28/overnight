@@ -1,0 +1,29 @@
+{
+  "key": "SHOP-101",
+  "summary": "Guest checkout does not ask for a phone number",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "checkout",
+    "guest",
+    "courier"
+  ],
+  "epic": "Guest checkout",
+  "reporter": "priya.n",
+  "assignee": null,
+  "created": "2025-01-09T09:30:00.000Z",
+  "updated": "2025-01-14T14:15:00.000Z",
+  "description": "The courier rejects delivery attempts when there is no contact number on the label. Our guest checkout spec says the phone number is required, but the form marks it optional and the API accepts orders without one. Roughly 8% of guest orders arrive with no phone.",
+  "acceptance_criteria": [
+    "The guest checkout form marks Phone as required.",
+    "Submitting without a phone number shows a validation message.",
+    "The API rejects a guest order with no phone with a 400."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-118"
+    }
+  ]
+}

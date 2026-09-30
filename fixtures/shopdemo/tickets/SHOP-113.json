@@ -1,0 +1,23 @@
+{
+  "key": "SHOP-113",
+  "summary": "No email is sent when an order ships",
+  "type": "Story",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "email",
+    "orders"
+  ],
+  "epic": "Orders",
+  "reporter": "sam.o",
+  "assignee": null,
+  "created": "2025-02-14T09:30:00.000Z",
+  "updated": "2025-02-19T14:15:00.000Z",
+  "description": "Only the receipt is emailed. Shoppers have no idea their order shipped, which is the single biggest driver of 'where is my order' contacts.",
+  "acceptance_criteria": [
+    "A shipped order triggers one email.",
+    "The email states the order reference.",
+    "No email is sent twice for the same transition."
+  ],
+  "links": []
+}

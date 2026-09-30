@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-132",
+  "summary": "Replace product deletion with a visibility flag",
+  "type": "Story",
+  "status": "Done",
+  "priority": "Medium",
+  "labels": [
+    "admin",
+    "catalogue"
+  ],
+  "epic": "Admin",
+  "reporter": "marta.s",
+  "assignee": "lena.b",
+  "created": "2025-04-12T09:30:00.000Z",
+  "updated": "2025-04-17T14:15:00.000Z",
+  "description": "Deleting a product broke every order that referenced it. Products are now hidden instead.",
+  "acceptance_criteria": [
+    "A hidden product does not appear in the list or by direct link.",
+    "Past orders still render the product name."
+  ],
+  "links": []
+}

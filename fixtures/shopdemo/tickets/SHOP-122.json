@@ -1,0 +1,28 @@
+{
+  "key": "SHOP-122",
+  "summary": "Split order creation from payment",
+  "type": "Story",
+  "status": "Done",
+  "priority": "High",
+  "labels": [
+    "checkout",
+    "payments"
+  ],
+  "epic": "Payments",
+  "reporter": "priya.n",
+  "assignee": "marta.s",
+  "created": "2025-03-13T09:30:00.000Z",
+  "updated": "2025-03-18T14:15:00.000Z",
+  "description": "A declined card used to lose the whole attempt. Checkout now creates the order first and charges second, so support can see what was attempted.",
+  "acceptance_criteria": [
+    "POST /api/orders creates a PENDING_PAYMENT order.",
+    "POST /api/orders/{id}/pay charges and moves it to PAID.",
+    "Paying twice answers 409."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-123"
+    }
+  ]
+}

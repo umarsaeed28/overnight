@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-138",
+  "summary": "Account lockout can be used to lock someone else out",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "auth",
+    "security"
+  ],
+  "epic": "Accounts",
+  "reporter": "alex.k",
+  "assignee": null,
+  "created": "2025-04-30T09:30:00.000Z",
+  "updated": "2025-05-05T14:15:00.000Z",
+  "description": "The lock is per account rather than per source address, so deliberately bad guesses keep a shopper out of their own account.",
+  "acceptance_criteria": [
+    "Repeated failures from one address are throttled independently of the account lock.",
+    "A legitimate shopper can still get in during an attack."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-104"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-115",
+  "summary": "Password reset does not invalidate existing sessions",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "auth",
+    "security"
+  ],
+  "epic": "Accounts",
+  "reporter": "priya.n",
+  "assignee": null,
+  "created": "2025-02-20T09:30:00.000Z",
+  "updated": "2025-02-25T14:15:00.000Z",
+  "description": "Resetting a password is the action people take when they suspect someone else is in their account. Today the other session survives the reset.",
+  "acceptance_criteria": [
+    "A successful reset ends every other session for that account.",
+    "The shopper is asked to sign in again."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-107"
+    }
+  ]
+}

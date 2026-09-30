@@ -1,0 +1,27 @@
+{
+  "key": "SHOP-128",
+  "summary": "Guest cart is not merged when the shopper signs in",
+  "type": "Bug",
+  "status": "Open",
+  "priority": "Medium",
+  "labels": [
+    "cart",
+    "auth"
+  ],
+  "epic": "Cart",
+  "reporter": "lena.b",
+  "assignee": null,
+  "created": "2025-03-31T09:30:00.000Z",
+  "updated": "2025-04-05T14:15:00.000Z",
+  "description": "Items added on a phone disappear after signing in on a laptop because the guest cart simply keeps being used instead of merging.",
+  "acceptance_criteria": [
+    "Signing in merges the guest cart into the account cart.",
+    "Quantities are summed and clamped to the per-line limit."
+  ],
+  "links": [
+    {
+      "relation": "relates to",
+      "key": "SHOP-110"
+    }
+  ]
+}

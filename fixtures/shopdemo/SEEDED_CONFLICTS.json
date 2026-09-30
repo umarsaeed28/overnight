@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "description": "Answer key for the conflict_detection eval. Each entry is a contradiction deliberately seeded between a documentation page and the code. A detector is credited with finding a conflict when it cites at least one of doc_paths and at least one of code_paths for the same subject.",
+  "conflicts": [
+    {
+      "id": "password-min-length",
+      "subject": "Minimum password length",
+      "doc_claim": "Passwords must be at least 12 characters.",
+      "code_claim": "Signup and reset enforce a minimum of 8 characters.",
+      "doc_paths": ["docs/09-accounts-and-passwords.md"],
+      "code_paths": ["api/lib/rules.ts", "api/lib/validation.ts"],
+      "ticket_keys": ["SHOP-103"]
+    },
+    {
+      "id": "guest-order-cap",
+      "subject": "Maximum value of a guest order",
+      "doc_claim": "A guest order may not exceed $500.",
+      "code_claim": "No order value limit is applied to guest checkout.",
+      "doc_paths": ["docs/05-guest-checkout.md"],
+      "code_paths": ["api/routes/orders.ts", "api/lib/validation.ts"],
+      "ticket_keys": ["SHOP-105"]
+    },
+    {
+      "id": "cart-expiry",
+      "subject": "How long a cart lives",
+      "doc_claim": "A cart expires 24 hours after it is created.",
+      "code_claim": "Carts are created with a 7 day expiry.",
+      "doc_paths": ["docs/04-cart-rules.md"],
+      "code_paths": ["api/lib/rules.ts", "api/routes/cart.ts"],
+      "ticket_keys": ["SHOP-102", "SHOP-133"]
+    },
+    {
+      "id": "free-shipping-threshold",
+      "subject": "Subtotal above which shipping is free",
+      "doc_claim": "Shipping is free when the order subtotal is over $50.",
+      "code_claim": "Shipping is free only above $75.",
+      "doc_paths": ["docs/06-shipping-and-fees.md"],
+      "code_paths": ["api/lib/rules.ts"],
+      "ticket_keys": ["SHOP-106", "SHOP-131"]
+    },
+    {
+      "id": "max-quantity-per-line",
+      "subject": "Maximum units of one product in a cart line",
+      "doc_claim": "A single line may hold at most 10 units of a product.",
+      "code_claim": "A line is clamped at 99 units.",
+      "doc_paths": ["docs/04-cart-rules.md"],
+      "code_paths": ["api/lib/rules.ts", "api/lib/validation.ts", "api/routes/cart.ts"],
+      "ticket_keys": ["SHOP-110"]
+    },
+    {
+      "id": "awaiting-stock-status",
+      "subject": "Set of order statuses",
+      "doc_claim": "AWAITING_STOCK sits between PAID and SHIPPED in the order lifecycle.",
+      "code_claim": "The OrderStatus enum has only PENDING_PAYMENT, PAID, SHIPPED, and CANCELLED.",
+      "doc_paths": ["docs/08-order-lifecycle.md"],
+      "code_paths": ["prisma/schema.prisma", "lib/types.ts"],
+      "ticket_keys": ["SHOP-109"]
+    },
+    {
+      "id": "reset-token-ttl",
+      "subject": "How long a password reset link works",
+      "doc_claim": "A reset link is valid for 1 hour.",
+      "code_claim": "Reset tokens are accepted for 24 hours.",
+      "doc_paths": ["docs/10-password-reset.md"],
+      "code_paths": ["api/lib/rules.ts", "api/routes/auth.ts", "api/lib/mailer.ts"],
+      "ticket_keys": ["SHOP-107"]
+    },
+    {
+      "id": "guest-phone-required",
+      "subject": "Whether a guest must supply a phone number",
+      "doc_claim": "A phone number is required for guest orders.",
+      "code_claim": "Phone is optional in the shipping address schema and in the form.",
+      "doc_paths": ["docs/05-guest-checkout.md"],
+      "code_paths": ["api/lib/validation.ts", "components/AddressForm.tsx"],
+      "ticket_keys": ["SHOP-101", "SHOP-118"]
+    },
+    {
+      "id": "admin-price-change-cap",
+      "subject": "Limit on a single admin price change",
+      "doc_claim": "A single edit may not change a price by more than 50% in either direction.",
+      "code_claim": "No price change limit is validated.",
+      "doc_paths": ["docs/12-admin-catalogue.md"],
+      "code_paths": ["api/lib/validation.ts", "api/routes/products.ts"],
+      "ticket_keys": ["SHOP-108"]
+    },
+    {
+      "id": "lockout-threshold",
+      "subject": "Failed sign-ins before an account locks",
+      "doc_claim": "An account locks after 3 consecutive failed sign-in attempts.",
+      "code_claim": "The account locks after 5 failed attempts.",
+      "doc_paths": ["docs/09-accounts-and-passwords.md"],
+      "code_paths": ["api/lib/rules.ts", "api/routes/auth.ts"],
+      "ticket_keys": ["SHOP-104"]
+    }
+  ]
+}

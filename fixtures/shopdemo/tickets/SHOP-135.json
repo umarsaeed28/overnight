@@ -1,0 +1,22 @@
+{
+  "key": "SHOP-135",
+  "summary": "No tax is calculated anywhere",
+  "type": "Story",
+  "status": "Open",
+  "priority": "High",
+  "labels": [
+    "pricing",
+    "compliance"
+  ],
+  "epic": "Fulfilment",
+  "reporter": "lena.b",
+  "assignee": null,
+  "created": "2025-04-21T09:30:00.000Z",
+  "updated": "2025-04-26T14:15:00.000Z",
+  "description": "The price shown is the price charged. That is fine for the demo and not fine for a real launch in any US state.",
+  "acceptance_criteria": [
+    "Tax is calculated per destination and shown as its own line.",
+    "The charged total includes tax."
+  ],
+  "links": []
+}
